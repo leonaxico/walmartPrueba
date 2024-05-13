@@ -1,0 +1,49 @@
+version: '3.0'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgresDB
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=products
+
+
+  server:
+    image: demowalmart
+    container_name: demowalmart
+    expose:
+      - 9707
+    ports:
+      - 9707:9707
+    restart: unless-stopped
+    depends_on:
+      - db
+    links:
+      - db:database
+    build:
+      context: .
+    environment:
+      - auth.manager.secret-key=secret-encription-tokens-don't-hack
+      - logging.level.com.decsef.auth.manager=DEBUG
+      - spring.main.allow-circular-references=true
+      - server.port=9707
+      - spring.servlet.multipart.max-file-size=100MB
+      - spring.servlet.multipart.max-request-size=100MB
+      - spring.datasource.url=jdbc:postgresql://database:5432/products
+      - spring.datasource.username=postgres
+      - spring.datasource.password=postgres
+      - spring.jpa.hibernate.ddl-auto=update
+      - spring.datasource.driver-class-name=org.postgresql.Driver
+      - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+
+volumes:
+  postgres-data:
