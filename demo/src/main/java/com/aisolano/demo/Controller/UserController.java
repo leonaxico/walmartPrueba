@@ -27,8 +27,8 @@ import java.util.Objects;
 
 @Slf4j
 @RestController
-@RequestMapping("user/")
-public class UserContoller {
+@RequestMapping("/user")
+public class UserController {
     @Autowired
     private UserService userService;
 

@@ -2,6 +2,7 @@ package com.aisolano.demo.Service;
 
 import com.aisolano.demo.Entity.User;
 import com.aisolano.demo.Payload.SingUpPayload;
+import com.aisolano.demo.Repository.UserRepository;
 import com.decsef.auth.manager.entity.AuthUser;
 import com.decsef.auth.manager.payload.CreateUserRequest;
 import com.decsef.auth.manager.payload.CreateUserResponse;
@@ -19,6 +20,9 @@ public class UserService {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
     public CreateUserResponse create(SingUpPayload signUpRequest, String roleNames, Optional<String> fileURL) {
@@ -39,6 +43,7 @@ public class UserService {
             if (fileURL.isPresent()){
                 user.setImageURL(fileURL.get());
             }
+            userRepository.save(user);
         }
         return createUserResponse;
     }
