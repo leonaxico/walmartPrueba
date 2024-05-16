@@ -19,7 +19,7 @@ public class SecurityConfig extends AuthManagerConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // Don't forget call to the configure of the super class
+        // Don't forget call configure of the super class
         super.configure(http);
 
         http.csrf().disable();
@@ -27,7 +27,7 @@ public class SecurityConfig extends AuthManagerConfigurerAdapter {
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeRequests().antMatchers("/sign-up")
+        http.authorizeRequests().antMatchers("/api/loggin/**")
                 .permitAll();
 
         http.authorizeRequests().anyRequest().authenticated();

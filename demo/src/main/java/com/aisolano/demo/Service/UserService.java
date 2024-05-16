@@ -47,4 +47,8 @@ public class UserService {
         }
         return createUserResponse;
     }
+
+    public User getUser(AuthUser user){
+        return userRepository.findById(user.getId()).get();
+    }
 }

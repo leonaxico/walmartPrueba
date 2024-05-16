@@ -5,7 +5,6 @@ import com.aisolano.demo.Entity.Product;
 import com.aisolano.demo.Payload.ProductPayload;
 import com.aisolano.demo.RoleName;
 import com.aisolano.demo.Service.ProductService;
-import com.decsef.auth.manager.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -16,6 +15,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequestMapping("/api")
 @Secured({RoleName.ROLE_USER, RoleName.ROLE_ADMIN})
 public class ProductController {
     @Autowired
@@ -39,7 +39,7 @@ public class ProductController {
         return productService.createProduct(productPayload);
     }
 
-    @PostMapping("updateProduct/{id}")
+    @PostMapping("/updateProduct/{id}")
     public Product updateProduct(
             @Valid @RequestBody ProductPayload productPayload,
             @PathVariable Long id){

@@ -19,6 +19,5 @@ public class SingUpPayload {
     @NotBlank
     private String password;
 
-    @NotBlank
     private String username;
 }
